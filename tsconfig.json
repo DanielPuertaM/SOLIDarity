@@ -3,24 +3,36 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "ES2022",
-    "module": "preserve"
-  },
+  "strict": true,
+  "noImplicitOverride": true,
+  "noPropertyAccessFromIndexSignature": true,
+  "noImplicitReturns": true,
+  "noFallthroughCasesInSwitch": true,
+  "skipLibCheck": true,
+  "isolatedModules": true,
+  "experimentalDecorators": true,
+  "importHelpers": true,
+  "target": "ES2022",
+  "module": "ES2022",
+  "moduleResolution": "node",
+  "useDefineForClassFields": false,
+  "baseUrl": "./",
+  "typeRoots": [
+    "node_modules/@types"
+  ],
+  "lib": [
+    "ES2022",
+    "DOM"
+  ]
+},
+
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "typeCheckHostBindings": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "enableResourceLoader": true 
   },
   "files": [],
   "references": [

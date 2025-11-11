@@ -1,0 +1,190 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+    <div
+        class="card bg-base-100 shadow-xl w-full max-w-lg p-10 border border-gray-200 dark:border-gray-700 rounded-2xl">
+
+        <h3 class="text-4xl font-extrabold text-center mb-4 text-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 inline-block mr-2 align-middle" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+            </svg>
+            {{ globalService.WORDS.LABEL.CREATE_ACCOUNT }}
+        </h3>
+
+        <p class="text-center mb-8 text-base-content/70">
+            {{ globalService.WORDS.LABEL.REGISTER_FORM }}
+        </p>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="space-y-6">
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text font-bold text-base-content">
+                        {{ globalService.WORDS.LABEL.NAME }}
+                    </span>
+                </label>
+                <input type="text" formControlName="name" placeholder="{{ globalService.WORDS.PLACEHOLDER.NAME }}"
+                    class="input input-bordered input-primary w-full transition duration-300 ease-in-out focus:ring-2 focus:ring-primary focus:border-transparent"
+                    required />
+                @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
+                <span class="text-error text-sm mt-1">
+                    {{ globalService.WORDS.ERRORS.NAME_REQUIRED }}
+                </span>
+                }
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text font-bold text-base-content">
+                        {{ globalService.WORDS.LABEL.EMAIL }}
+                    </span>
+                </label>
+                <input type="email" formControlName="email" placeholder="{{ globalService.WORDS.PLACEHOLDER.EMAIL }}"
+                    class="input input-bordered input-primary w-full transition duration-300 ease-in-out focus:ring-2 focus:ring-primary focus:border-transparent"
+                    required />
+                <div class="mt-1">
+                    @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+
+                    @if (registerForm.get('email')?.hasError('required')) {
+                    <span class="text-error text-sm mt-1">
+                        {{ globalService.WORDS.ERRORS.EMAIL_REQUIRED }}
+                    </span>
+                    }
+
+                    @if (registerForm.get('email')?.hasError('email')) {
+                    <span class="text-error text-sm mt-1">
+                        {{ globalService.WORDS.ERRORS.EMAIL_INVALID }}
+                    </span>
+                    }
+                    }
+
+                </div>
+
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text font-bold text-base-content">
+                        {{ globalService.WORDS.LABEL.PASSWORD }}
+                    </span>
+                </label>
+                <input type="password" formControlName="password"
+                    placeholder="{{ globalService.WORDS.PLACEHOLDER.PASSWORD }}"
+                    class="input input-bordered input-primary w-full transition duration-300 ease-in-out focus:ring-2 focus:ring-primary focus:border-transparent"
+                    required />
+
+                <div class="mt-1">
+                    @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+                    @if (registerForm.get('password')?.hasError('required')) {
+                    <span class="text-error text-sm mt-1">
+                        {{ globalService.WORDS.ERRORS.PASSWORD_REQUIRED }}
+                    </span>
+                    }
+
+                    @if (registerForm.get('password')?.hasError('minlength')) {
+                    <span class="text-error text-sm">
+                        {{ globalService.WORDS.ERRORS.PASSWORD_INVALID }}
+                    </span>
+                    }
+                    }
+                </div>
+
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text font-bold text-base-content">
+                        {{ globalService.WORDS.LABEL.PHONE }}
+                    </span>
+                </label>
+                <input type="text" formControlName="telefono" placeholder="{{ globalService.WORDS.PLACEHOLDER.PHONE }}"
+                    class="input input-bordered input-primary w-full transition duration-300 ease-in-out focus:ring-2 focus:ring-primary focus:border-transparent"
+                    required />
+                <div class="mt-1">
+                    @if (registerForm.get('telefono')?.invalid && registerForm.get('telefono')?.touched) {
+
+                    @if (registerForm.get('telefono')?.hasError('required')) {
+                    <span class="text-error text-sm">
+                        {{ globalService.WORDS.ERRORS.PHONE_REQUIRED }}
+                    </span>
+                    }
+
+                    @if (registerForm.get('telefono')?.hasError('pattern')) {
+                    <span class="text-error text-sm">
+                        {{ globalService.WORDS.ERRORS.PHONE_INVALID }}
+                    </span>
+                    } @else {
+                    @if (registerForm.get('telefono')?.hasError('minlength')) {
+                    <span class="text-error text-sm">
+                        {{ globalService.WORDS.ERRORS.PHONE_MIN_LENGTH }}
+                    </span>
+                    }
+                    }
+                    }
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text font-bold text-base-content">
+                        {{ globalService.WORDS.LABEL.ADDRESS }}
+                    </span>
+                </label>
+                <input type="text" formControlName="address" placeholder="{{ globalService.WORDS.PLACEHOLDER.ADDRESS }}"
+                    class="input input-bordered input-primary w-full transition duration-300 ease-in-out focus:ring-2 focus:ring-primary focus:border-transparent"
+                    required />
+
+                @if (registerForm.get('address')?.invalid && registerForm.get('address')?.touched) {
+                <span class="text-error text-sm mt-1">
+                    {{ globalService.WORDS.ERRORS.ADDRES_REQUIRED }}
+                </span>
+                }
+            </div>
+
+            <div class="pt-2">
+                <button type="submit"
+                    class="btn btn-primary w-full text-lg font-semibold transform hover:scale-[1.01] transition duration-300 ease-in-out"
+                    [disabled]="registerForm.invalid || registerResource.isLoading()">
+                    @if (registerResource.isLoading()) {
+                    <span class="loading loading-spinner loading-sm"></span>
+                    {{ globalService.WORDS.ACTIONS.LOADING }}
+                    } @else {
+                    {{ globalService.WORDS.ACTIONS.REGISTER }}
+                    }
+                </button>
+            </div>
+
+        </form>
+
+        @if (registerResource.value()?.__error) {
+        <div class="alert alert-error mt-6 shadow-md" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{{ globalService.WORDS.ERRORS.REGISTER_FAILED }}</span>
+        </div>
+        }
+
+        @if (!registerResource.value()?.__error && registerResource.value()) {
+        <div class="alert alert-success mt-6 shadow-md" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{{ globalService.WORDS.SUCCESS.REGISTER_SUCCESS }}</span>
+        </div>
+        }
+
+        <p class="text-center mt-6 text-sm text-base-content/80">
+            {{ globalService.WORDS.LABEL.HAVE_ACCOUNT }}
+            <a (click)="toggle()"
+                class="cursor-pointer text-primary font-bold hover:underline hover:text-primary-focus transition duration-200">
+                {{ globalService.WORDS.LABEL.LOGIN_HERE }}
+            </a>
+        </p>
+
+    </div>
+</div>

@@ -1,0 +1,10 @@
+@if (isLogin()) {
+	<app-login
+		[isLogin]="isLogin"
+	/>
+
+} @else {
+	<app-register
+		[isLogin]="isLogin"
+	/>
+}
