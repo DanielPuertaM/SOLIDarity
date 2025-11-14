@@ -1,0 +1,120 @@
+<nav
+  class="navbar bg-base-100 shadow-md px-6 sticky top-0 z-50 border-b border-base-300 transition-colors duration-300">
+  <div class="navbar-start">
+
+    <div class="dropdown lg:hidden">
+      <button tabindex="0" class="btn btn-ghost">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <ul tabindex="0"
+        class="menu menu-sm dropdown-content mt-3 z-[1] p-3 shadow-xl bg-base-100 rounded-xl w-60 space-y-2">
+        @if(authService.hasAdminPermission()){
+        @for (item of navItemsAdmind; track $index) {
+        <li>
+          <a [routerLink]="item.route" routerLinkActive="text-primary font-semibold"
+            class="font-medium text-base hover:text-primary transition-colors">
+            {{ item.label }}
+          </a>
+        </li>
+        }
+        }@else {
+
+          @for (item of navItems; track $index) {
+          <li>
+            <a [routerLink]="item.route" routerLinkActive="text-primary font-semibold"
+              class="font-medium text-base hover:text-primary transition-colors">
+              {{ item.label }}
+            </a>
+          </li>
+          }
+        }
+
+        <li>
+          <div class="h-px bg-base-300 w-full my-2 select-none rounded"></div>
+        </li>
+
+        <li class="pt-2">
+          <div class="dropdown dropdown-end w-full">
+            <label tabindex="0" class="flex items-center gap-3 cursor-pointer hover:text-primary transition-colors">
+              <div class="btn btn-ghost btn-circle avatar ring ring-primary ring-offset-base-100 ring-offset-2">
+                <div class="w-10 rounded-full flex items-center justify-center bg-base-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="#1f00bb"
+                      d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4" />
+                  </svg>
+                </div>
+              </div>
+              <span class="font-semibold">Mi cuenta</span>
+            </label>
+
+            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-xl bg-base-100 rounded-xl w-52">
+              <li><a routerLink="/perfil">Perfil</a></li>
+              <li>
+                <a class="text-error font-semibold hover:text-error/80" (click)="authService.signOut()">
+                  Cerrar sesión
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+    
+   
+    <a routerLink="/"
+      class="btn btn-ghost text-2xl font-extrabold tracking-tight text-primary hover:scale-105 transition-transform">
+      SOLIDarity
+    </a>
+  </div>
+
+  <div class="navbar-center hidden lg:flex">
+    <ul class="menu menu-horizontal px-1 space-x-2">
+      @if (authService.hasAdminPermission()) {
+        @for (item of navItemsAdmind; track $index) {
+      <li>
+        <a [routerLink]="item.route" routerLinkActive="text-primary font-semibold border-b-2 border-primary"
+          class="font-medium hover:text-primary transition-colors duration-200">
+          {{ item.label }}
+        </a>
+      </li>
+      }
+      }@else {
+         @for (item of navItems; track $index) {
+      <li>
+        <a [routerLink]="item.route" routerLinkActive="text-primary font-semibold border-b-2 border-primary"
+          class="font-medium hover:text-primary transition-colors duration-200">
+          {{ item.label }}
+        </a>
+      </li>
+      }
+      }
+     
+    </ul>
+  </div>
+
+  <div class="navbar-end hidden lg:flex items-center gap-4">
+    <div class="dropdown dropdown-end">
+      <label tabindex="0"
+        class="btn btn-ghost btn-circle avatar ring ring-primary ring-offset-base-100 ring-offset-2 hover:scale-105 transition-transform">
+        <div class="w-10 rounded-full flex items-center justify-center bg-base-200">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="#1f00bb"
+              d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4" />
+          </svg>
+        </div>
+      </label>
+      <ul tabindex="0"
+        class="menu menu-sm dropdown-content mt-3 z-[100] p-2 shadow-xl bg-base-100 rounded-xl w-52 ring-1 ring-base-300">
+        <li><a routerLink="/perfil">Perfil</a></li>
+        <li>
+          <a class="text-error font-semibold hover:text-error/80" (click)="authService.signOut()">
+            Cerrar sesión
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
