@@ -3,6 +3,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@auth/*": ["./src/app/auth/*"],
+      "@core/*": ["./src/app/core/*"],
+      "@shared/*": ["./src/app/shared/*"],
+      "@app/*": ["./src/app/*"],
+    },
   "strict": true,
   "noImplicitOverride": true,
   "noPropertyAccessFromIndexSignature": true,
@@ -14,7 +20,7 @@
   "importHelpers": true,
   "target": "ES2022",
   "module": "ES2022",
-  "moduleResolution": "node",
+  "moduleResolution": "bundler",
   "useDefineForClassFields": false,
   "baseUrl": "./",
   "typeRoots": [
