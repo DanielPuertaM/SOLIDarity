@@ -5,6 +5,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { loginFormService } from './services/login-form';
 import { catchError, map, of } from 'rxjs';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '@auth/services/auth';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class Login {
   protected globalService = inject(GlobalService);
   private loginFormService = inject(loginFormService);
-
+  private authService = inject(AuthService);
   public isLogin = input.required<WritableSignal<boolean>>();
   loginForm: FormGroup;
 
@@ -46,9 +47,12 @@ export class Login {
         console.log('register error:', this.loginResource.error());
       }
 
-      if (this.loginResource.hasValue()) {
-        
-      }
+      if (!this.loginResource.hasValue()) return;
+
+      const response = this.loginResource.value();
+      if (!response) return;
+
+      this.authService.handleAuthenticated(response);
 
     });
   }

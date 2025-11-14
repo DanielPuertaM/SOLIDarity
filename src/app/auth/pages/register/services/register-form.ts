@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { registerRequest } from 'src/app/auth/models/registerReques';
 import { userResponse } from 'src/app/auth/models/userResponse';
 import { AuthService } from 'src/app/auth/services/auth';
@@ -23,7 +23,7 @@ export class RegisterFormService {
     )
     .pipe(
       tap( response => this.authService.saveCredentials(response)),
-    //   map( response => this.authService.handleAuthSuccess(response)),
+       map( response => this.authService.handleAuthSuccess(response)),
     //   catchError(error => this.authService.handleAuthError(error))
      );
   }

@@ -5,6 +5,7 @@ import { RegisterFormService } from './services/register-form';
 import { registerRequest } from '../../models/registerReques';
 import { catchError, finalize, map, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { AuthService } from '@auth/services/auth';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 export class Register implements OnInit {
   protected globalService = inject(GlobalService);
   private registerFormService = inject(RegisterFormService);
+  private authService = inject(AuthService);
   public isLogin = input.required<WritableSignal<boolean>>();
   registerForm: FormGroup
 
@@ -46,9 +48,13 @@ export class Register implements OnInit {
         console.log('register error:', this.registerResource.error());
       }
 
-      if (this.registerResource.hasValue()) {
+      if (!this.registerResource.hasValue()) return;
+      const res = this.registerResource.value();
+      if(!res)return;
+
+      this.authService.handleAuthenticated(res);
         
-      }
+      
 
     });
   }
