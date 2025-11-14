@@ -1,0 +1,81 @@
+<div class="tabs tabs-lift tabs-lg w-full justify-center mb-8">
+
+  <input type="radio" name="tabs_campania" class="tab text-lg" aria-label="En progreso"
+    [checked]="selected() === statusCampania.EN_PROGRESO" (change)="select(statusCampania.EN_PROGRESO)" />
+
+  <div class="tab-content bg-base-100 border-base-300 p-6 min-h-screen">
+    @if (selected() === statusCampania.EN_PROGRESO) {
+    <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
+    }
+  </div>
+
+  <input type="radio" name="tabs_campania" class="tab text-lg" aria-label="Completadas"
+    [checked]="selected() === statusCampania.COMPLETADA" (change)="select(statusCampania.COMPLETADA)" />
+
+  <div class="tab-content bg-base-100 border-base-300 p-6 min-h-screen">
+    @if (selected() === statusCampania.COMPLETADA) {
+    <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
+    }
+  </div>
+
+  @if (authService.hasAdminPermission()) {
+  <input type="radio" name="tabs_campania" class="tab text-lg" aria-label="Pendiente"
+    [checked]="selected() === statusCampania.PENDIENTE" (change)="select(statusCampania.PENDIENTE)" />
+
+  <div class="tab-content bg-base-100 border-base-300 p-6 min-h-screen">
+    @if (selected() === statusCampania.PENDIENTE) {
+    <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
+    }
+  </div>
+
+  <input type="radio" name="tabs_campania" class="tab text-lg" aria-label="Pausada"
+    [checked]="selected() === statusCampania.PAUSADA" (change)="select(statusCampania.PAUSADA)" />
+
+  <div class="tab-content bg-base-100 border-base-300 p-6 min-h-screen">
+    @if (selected() === statusCampania.PAUSADA) {
+    <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
+    }
+  </div>
+
+  <input type="radio" name="tabs_campania" class="tab text-lg" aria-label="Rechazada"
+    [checked]="selected() === statusCampania.RECHAZADA" (change)="select(statusCampania.RECHAZADA)" />
+
+  <div class="tab-content bg-base-100 border-base-300 p-6 min-h-screen">
+    @if (selected() === statusCampania.RECHAZADA) {
+    <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
+    }
+  </div>
+  }
+
+</div>
+
+
+<ng-template #campaniasTemplate>
+  <section class="p-6">
+
+    @if (campaniasResource.isLoading()) {
+    <div class="flex justify-center py-10">
+      <span class="loading loading-spinner loading-lg text-primary"></span>
+    </div>
+    }
+
+    @if (campaniasResource.error()) {
+    <div class="text-center text-red-500 py-6">
+      {{ globalService.WORDS.ERRORS.ERROR_CAMPAIGNS_LOADING }}
+    </div>
+    }
+
+    @if (campaniasResource.hasValue() && campaniasResource.value().length) {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (campania of campaniasResource.value(); track campania.id) {
+      <app-campania [campania]="campania" />
+      }
+    </div>
+    } @else {
+    <div class="text-center text-gray-500 py-8">
+      {{ globalService.WORDS.ERRORS.NO_CAMPAIGNS_AVAILABLE }}
+    </div>
+    }
+
+  </section>
+</ng-template>
