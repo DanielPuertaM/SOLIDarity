@@ -13,7 +13,41 @@ export const WORDS = {
     CONFIRM_PASSWORD: "Confirmar contraseña",
     PHONE: "Teléfono",
     ADDRESS: "Dirección",
-    
+    DASHBOARD: 'Dashboard',
+    RAISED: 'Recaudado',
+    GOAL: 'Objetivo',
+    DONATE: 'Donar',
+    BACK: 'Regresar',
+    CHOOSE_AMOUNT: "Elige un monto para donar",
+    LOADING_CAMPAIGN: "Cargando campaña",
+    AMOUNT_VALID_1000: "El monto debe ser al menos de $1.000",
+    FREE_AMOUNT: "Monto libre",
+    PROCESSING: "Procesando...",
+    DONATE_NOW: "Donar ahora",
+    THANKS_FOR_DONATION: "¡Gracias por tu donación!",
+    START_DATE: "Fecha de inicio",
+    CAMPAING_PROGRESS: "Progreso de la campaña",
+    LOADING_INFORMATION: "Cargando información",
+    BENEFICIARY_NO_INFORMATION: "No se encontró información del beneficiario",
+    PDF_IN_REVIEW: "Tu PDF está en revisión",
+    IN_REVIEW: "Por favor espera mientras el equipo valida la información",
+    PDF_REJECTED: "Tu PDF fue rechazado",
+    YOU_MUST_UPLOAD_DOCUMENT: "Debes cargar un nuevo documento",
+    NEW_PDF: "Sube un nuevo PDF",
+    UPLOAD_YOUR_PDF: "Sube tu PDF",
+    UPLOAD_PDF: "Subir PDF",
+    NO_UPLOAD_PDF: "No has cargado ningún PDF",
+    UPLOAD_CV: "Por favor sube tu hoja de vida para validar tu identidad.",
+    PDF_APPROVE: "Tu PDF fue aprobado",
+    YOU_CAN_NOW_CREATED_CAMPAING: "Ya puedes crear tu Campaña",
+    CREATE_CAMPAING: "Crear Campaña",
+    TITLE: "Titulo",
+    DESCRIPTION: "Descripción",
+    TARJET_AMOUNT: "Monto Objetivo",
+    APPROVE: "Aprobar",
+    PAUSE: "Pausar",
+    REJECT: "Rechzar"
+
   },
 
   PLACEHOLDER: {
@@ -43,6 +77,9 @@ export const WORDS = {
     REGISTER_FAILED: "Ocurrió un error al registrarte, intenta nuevamente.",
     PHONE_REQUIRED: "El número telefónico es obligatorio",
     PHONE_MIN_LENGTH: "El número telefónico debe tener al menos 6 dígitos",
+    NO_CAMPAIGNS_AVAILABLE: "No hay campañas disponibles por el momento.",
+    ERROR_CAMPAIGNS_LOADING: "Ocurrió un error al cargar las campañas.",
+    ERROR_PROCESSING_DONATION: "Ocurrió un error al procesar la donación."
   },
 
   SUCCESS: {

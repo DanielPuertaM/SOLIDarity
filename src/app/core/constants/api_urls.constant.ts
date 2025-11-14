@@ -1,4 +1,8 @@
 export const API_URLS = {
-	LOGIN: `http://localhost:8080/user-service/users/login`,
-	REGISTER: `http://localhost:8080/user-service/users`,
+	LOGIN: `http://localhost:8080/user-service/auth/login`,
+	REGISTER: `http://localhost:8080/user-service/auth/register`,
+	CAMPAÑAS: `http://localhost:8080/campania-service/campañas`,
+	DONACIONES: `http://localhost:8080/donacion-service/donaciones`,
+	USER: `http://localhost:8080/user-service/users`,
+
 }
