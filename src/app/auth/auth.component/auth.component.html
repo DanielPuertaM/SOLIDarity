@@ -1,10 +1,85 @@
-@if (isLogin()) {
-	<app-login
-		[isLogin]="isLogin"
-	/>
+<section class="relative py-20 min-h-screen flex flex-col items-center justify-start">
 
-} @else {
-	<app-register
-		[isLogin]="isLogin"
-	/>
-}
+  <div class="absolute inset-0 overflow-hidden z-0">
+
+    <div class="absolute inset-0 bg-gradient-to-br from-primary to-primary/80"></div>
+
+    <svg class="absolute top-0 left-0 w-full h-51 text-white/20"
+         viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="currentColor"
+        d="M0,96L80,112C160,128,320,160,480,160C640,160,800,128,960,112C1120,96,1280,96,1360,96L1440,96L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
+    </svg>
+
+    <svg class="absolute bottom-0 right-0 w-full h-51 text-white/20 rotate-180"
+         viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="currentColor"
+        d="M0,96L80,112C160,128,320,160,480,160C640,160,800,128,960,112C1120,96,1280,96,1360,96L1440,96L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
+    </svg>
+
+    <svg class="absolute top-24 left-10 w-16 h-16 opacity-15 text-white" 
+         fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 21s-6-4.35-9-8.5S2.75 3 6 3c2.5 0 4 2 4 2s1.5-2 4-2c3.25 0 6 3.5 3 9.5S12 21 12 21z" />
+    </svg>
+
+    <svg class="absolute bottom-20 right-12 w-20 h-20 opacity-15 text-white" 
+         fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 21s-6-4.35-9-8.5S2.75 3 6 3c2.5 0 4 2 4 2s1.5-2 4-2c3.25 0 6 3.5 3 9.5S12 21 12 21z" />
+    </svg>
+
+  </div>
+
+ <div class="relative z-10 text-center max-w-2xl px-6 mb-10">
+
+    @if (isLogin()) {
+      <div>
+
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white drop-shadow">
+          Bienvenido de nuevo
+        </h1>
+
+        <p class="text-white/90 mt-3 text-lg">
+          Ingresa para continuar ayudando a impulsar proyectos solidarios.
+        </p>
+
+      </div>
+    }
+
+    @else {
+      <div>    
+
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white drop-shadow">
+          Únete a SOLIDarity
+        </h1>
+
+        <p class="text-white/90 mt-3 text-lg">
+          Crea tu cuenta y empieza a construir campañas que transforman vidas.
+        </p>
+
+      </div>
+    }
+
+  </div>
+  <div class="relative z-10 w-full  flex justify-center px-6">
+
+    <div class="
+      bg-white/95 dark:bg-base-200/95 
+      backdrop-blur-xl
+      border border-white/40 dark:border-base-300/40
+      rounded-3xl shadow-2xl 
+      p-6  
+	  
+      flex justify-center
+    ">
+
+      @if (isLogin()) {
+        <app-login [isLogin]="isLogin"></app-login>
+      }
+      @else {
+        <app-register [isLogin]="isLogin"></app-register>
+      }
+
+    </div>
+
+  </div>
+
+</section>
