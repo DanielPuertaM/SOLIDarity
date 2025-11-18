@@ -25,7 +25,7 @@ export const WORDS = {
     PROCESSING: "Procesando...",
     DONATE_NOW: "Donar ahora",
     THANKS_FOR_DONATION: "¡Gracias por tu donación!",
-    START_DATE: "Fecha de inicio",
+    START_DATE: "Fecha de inicio:",
     CAMPAING_PROGRESS: "Progreso de la campaña",
     LOADING_INFORMATION: "Cargando información",
     BENEFICIARY_NO_INFORMATION: "No se encontró información del beneficiario",
@@ -46,7 +46,35 @@ export const WORDS = {
     TARJET_AMOUNT: "Monto Objetivo",
     APPROVE: "Aprobar",
     PAUSE: "Pausar",
-    REJECT: "Rechzar"
+    REJECT: "Rechazar",
+    RESUME: "Reanudar",
+    LOADING_PROFILE: "Cargando perfil",
+    WAIT_DOCUMENT: "Estamos revisando tu documento. Nuestro equipo lo evaluará y te notificaremos cuando esté listo.",
+    SAVE: "Guardar",
+    EDIT: "Editar",
+    BOOST_YOUR_CAUSE_POWER: "Impulsa el poder de tu causa",
+    WITH_SOLIDARITY_SUPPORT: "con el apoyo de SOLIDarity",
+    SOLIDARITY: "SOLIDarity",
+    MAIN_DESCRIPTION: "encontrarás una plataforma sencilla, segura y disponible siempre, diseñada para ayudarte a impulsar y hacer visible cualquier iniciativa solidaria.",
+    SEE_CAMPAIGNS: "Ver campañas",
+    SEE_HOW_IT_WORKS: "Ver cómo funciona",
+    A_COMMUNITY_THAT_TRANSFORMS_REALITIES: "Una comunidad que transforma realidades",
+    SUPPORT_FOR_CAUSE_LEADERS: "Apoyo a quienes lideran causas",
+    SUPPORT_FOR_CAUSE_LEADERS_TEXT: "Si tienes un proyecto personal o colectivo, te guiamos paso a paso para que puedas ponerlo en marcha y recibir la ayuda que necesitas.",
+    TRUST_FOR_HELPERS: "Confianza para quienes quieren ayudar",
+    TRUST_FOR_HELPERS_TEXT: "Las donaciones son rápidas y seguras. Mantente al tanto del avance y del impacto real que genera tu aporte.",
+    SPACE_FOR_COMMITTED_COMPANIES: "Espacio para empresas comprometidas",
+    SPACE_FOR_COMMITTED_COMPANIES_TEXT: "Las organizaciones pueden sumar esfuerzos apoyando campañas existentes o creando iniciativas que reflejen sus valores de responsabilidad social.",
+    REASONS_TO_LAUNCH_YOUR_PROJECT: "Razones para impulsar tu proyecto en SOLIDarity",
+    PROFESSIONAL_SUPPORT: "Acompañamiento profesional",
+    PROFESSIONAL_SUPPORT_TEXT: "Contarás con orientación especializada para que tu campaña crezca de forma clara y efectiva.",
+    ADAPTED_TO_YOUR_PROJECT: "Adaptada a tu proyecto",
+    ADAPTED_TO_YOUR_PROJECT_TEXT: "La plataforma se ajusta a distintos tipos de causas y necesidades, sin complicaciones.",
+    GUARANTEED_SECURITY: "Seguridad garantizada",
+    GUARANTEED_SECURITY_TEXT: "Transparencia y protección en cada proceso, tanto para quienes crean campañas como para quienes donan.",
+    EXCLUSIVE_TOOLS: "Herramientas exclusivas",
+    EXCLUSIVE_TOOLS_TEXT: "Accede a recursos automatizados como certificados, mensajes a donantes y más utilidades que facilitan tu labor.",
+    
 
   },
 
@@ -79,7 +107,15 @@ export const WORDS = {
     PHONE_MIN_LENGTH: "El número telefónico debe tener al menos 6 dígitos",
     NO_CAMPAIGNS_AVAILABLE: "No hay campañas disponibles por el momento.",
     ERROR_CAMPAIGNS_LOADING: "Ocurrió un error al cargar las campañas.",
-    ERROR_PROCESSING_DONATION: "Ocurrió un error al procesar la donación."
+    ERROR_PROCESSING_DONATION: "Ocurrió un error al procesar la donación.",
+    TITLE_REQUIRED: "El título es obligatorio",
+    TITLE_INVALID: "El título debe tener al menos 10 caracteres",
+    DESCRIPTION_REQUIRED: "La descripción es obligatoria",
+    DESCRIPTION_INVALID: "La descripción debe tener al menos 20 caracteres",
+    AMOUNT_REQUIRED: "El monto objetivo es obligatorio",
+    AMOUNT_INVALID: "El monto objetivo debe ser igual o mayor a $10.000",
+
+    
   },
 
   SUCCESS: {
