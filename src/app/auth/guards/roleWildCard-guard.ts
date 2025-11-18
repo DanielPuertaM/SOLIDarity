@@ -11,6 +11,9 @@ export const roleWildcardGuard: CanActivateFn = () => {
   if (role === Role.ADMIN) {
     router.navigate(['/user/dashboard-admin/home']);
     return false;
+  }else if (role === Role.VERIFIER) {
+    router.navigate(['/user/dashboard-verificador/home']);
+    return false;
   }
 
   router.navigate(['/user/dashboard-donante/home']);

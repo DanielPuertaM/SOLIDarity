@@ -8,7 +8,7 @@ export const userGuard: CanActivateFn = (route, state) => {
 
   if (!authService.isLogged()) {
     console.log('User is not logged in, redirecting to auth by userGuard');
-    router.navigate(['']).then();
+    router.navigate(['auth']).then();
     return false;
   }
   console.log('User is logged in, access granted by userGuard');
