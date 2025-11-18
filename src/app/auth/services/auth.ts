@@ -14,11 +14,12 @@ export class AuthService {
   private _user = signal<userResponse | null>(this.loadUserFromStorage());
   protected _role = signal<string | null>(this.loadRoleFromStorage());
 
-
   public saveCredentials(userResponse: userResponse) {
     let role = Role.DONOR;
-    if (userResponse.email === "admin@gmail.com") {
+    if (userResponse.email === 'admin@gmail.com') {
       role = Role.ADMIN;
+    } else if (userResponse.email === 'carlosNelson@gmail.com') {
+      role = Role.VERIFIER;
     }
 
     localStorage.setItem('Role', role);
@@ -28,11 +29,9 @@ export class AuthService {
     this._user.set(userResponse);
   }
 
-
-
   public signOut() {
     this.logout();
-    this.router.navigate(['/auth']).then();
+    this.router.navigate(['/']).then();
   }
 
   public getUserId(): number | null {
@@ -47,6 +46,11 @@ export class AuthService {
     return this._role() === Role.ADMIN;
   }
 
+  public hasVerifierPermission() {
+    return this._role() === Role.VERIFIER;
+  }
+
+
   private logout(): void {
     this._user.set(null);
     this._role.set(null);
@@ -60,15 +64,16 @@ export class AuthService {
     return true;
   }
 
-  public login(userResponse: userResponse) {
-
-  }
+  public login(userResponse: userResponse) {}
 
   public handleAuthenticated(response: boolean) {
     if (!response) return;
     console.log('Authenticated successfully');
     if (this.hasAdminPermission()) {
       this.redirectToDashBoard(Role.ADMIN);
+      return;
+    }else if(this.hasVerifierPermission()){
+      this.redirectToDashBoard(Role.VERIFIER);
       return;
     }
     this.redirectToDashBoard(Role.DONOR);
@@ -82,7 +87,9 @@ export class AuthService {
       case Role.ADMIN:
         this.router.navigateByUrl('/user/dashboard-admin/home').then();
         break;
-
+      case Role.VERIFIER:
+        this.router.navigateByUrl('/user/dashboard-verificador/home').then();
+        break;
     }
   }
 
@@ -96,35 +103,34 @@ export class AuthService {
     }
   }
 
-
   private loadRoleFromStorage(): string | null {
     const storedUser = localStorage.getItem('User');
     if (!storedUser) return null;
     try {
-      let user= JSON.parse(storedUser) as userResponse;
-      if(user.email==="admin@gmail.com"){
+      let user = JSON.parse(storedUser) as userResponse;
+      if (user.email === 'admin@gmail.com') {
         localStorage.setItem('Role', Role.ADMIN);
         return Role.ADMIN;
-      }else{
+      } else if (user.email === 'carlosNelson@gmail.com') {
+        localStorage.setItem('Role', Role.VERIFIER);
+        return Role.VERIFIER;
+      } else {
         localStorage.setItem('Role', Role.DONOR);
         return Role.DONOR;
       }
     } catch {
       return null;
     }
-
   }
 
   public isLogged(): boolean {
     return !!this._user();
   }
-
-
-
 }
 
 export enum Role {
   DONOR = 'Donante',
   BENEFICIARY = 'Beneficiario',
   ADMIN = 'Admin',
+  VERIFIER = 'Verificador',
 }
