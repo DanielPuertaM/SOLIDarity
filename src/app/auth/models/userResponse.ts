@@ -4,4 +4,5 @@ export interface userResponse {
     telefono: string;
     email: string;
     address: string;
+    imagenUrl: string;
 }

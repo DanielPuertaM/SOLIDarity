@@ -5,6 +5,13 @@ export interface CampaniaRequest{
     montoObjetivo: number;
 }
 
+export interface CampaniaUpdateRequest{
+    titulo: string;
+    descripcion: string;
+    montoObjetivo: number;
+}
+
+
 export interface CampaniaResponse {
     id: number;
     idBeneficiario: number;
@@ -36,4 +43,9 @@ export enum StatusCampania {
     PENDIENTE = "PENDIENTE",
 
 }
+
+export interface statusCampaniaRequest{
+    status: string;
+}
+
 
