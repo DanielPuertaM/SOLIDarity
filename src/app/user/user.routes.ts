@@ -31,8 +31,20 @@ export const userRoutes: Routes = [
 				loadComponent: () => import('./dashboard-donante/campania-perfil/campania-perfil')
 			},
 			{
+				path: 'home/mycampania/:id',
+				loadComponent: () => import('./dashboard-donante/edit-campania/edit-campania')
+			},
+			{
 				path: 'home/campania/:id/donacion',
 				loadComponent: () => import('./dashboard-donante/donacion/donacion')
+			},
+			{
+				path: 'perfil',
+				loadComponent: () => import('../shared/components/user-profile/user-profile')
+			},
+			{
+				path: 'about',
+				loadComponent: () => import('../shared/components/landing-page/landing-page')
 			},
 			{
 				path: '**',
@@ -56,7 +68,26 @@ export const userRoutes: Routes = [
 				loadComponent: () => import('./dashboard-admin/users/users')
 			},
 		]
+	},{
+		path: 'dashboard-verificador',
+		loadComponent: () => import('@shared/components/dashboard-global/dashboard'),
+		children: [
+			{
+				path: 'home',
+				loadComponent: () => import('../shared/components/campania-list/campania-list')
+			},
+			{
+				path: 'users/pdfs',
+				loadComponent: () => import('./dashboard-admin/users/users')
+			},
+			{
+				path: 'perfil',
+				loadComponent: () => import('../shared/components/user-profile/user-profile')
+			},
+		]
 	},
+
+	
 
 ]
 
