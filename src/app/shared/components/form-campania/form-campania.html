@@ -1,0 +1,94 @@
+<div class="card bg-base-100 border border-base-300 shadow-xl rounded-3xl mt-5">
+  <div class="card-body space-y-6">
+
+    <h2 class="card-title text-primary text-2xl mb-2">
+      {{ payloadCampaniaId() ? 'Editar campaña' : globalService.WORDS.LABEL.CREATE_CAMPAING }}
+    </h2>
+
+
+    <form [formGroup]="campaniaForm" class="space-y-6" (ngSubmit)="onCreateCampania()">
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text text-base-content">{{ globalService.WORDS.LABEL.TITLE }}</span>
+        </label>
+
+        <input type="text" formControlName="titulo"
+          class="input input-bordered w-full rounded-xl bg-base-200 text-base-content placeholder-base-content/60" />
+      </div>
+      <div class="mt-1">
+        @if (campaniaForm.get('titulo')?.invalid && campaniaForm.get('titulo')?.touched) {
+        @if (campaniaForm.get('titulo')?.hasError('required')) {
+        <span class="text-red-500 text-sm">{{ globalService.WORDS.ERRORS.TITLE_REQUIRED }}</span>
+        }
+        @if (campaniaForm.get('titulo')?.hasError('minlength')) {
+        <span class="text-red-500 text-sm">{{ globalService.WORDS.ERRORS.TITLE_INVALID }}</span>
+        }
+        }
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text text-base-content">{{ globalService.WORDS.LABEL.DESCRIPTION }}</span>
+        </label>
+
+        <textarea formControlName="descripcion"
+          class="textarea textarea-bordered w-full rounded-xl bg-base-200 text-base-content placeholder-base-content/60"></textarea>
+      </div>
+
+      <div class="mt-1">
+        @if (campaniaForm.get('descripcion')?.invalid && campaniaForm.get('descripcion')?.touched) {
+        @if (campaniaForm.get('descripcion')?.hasError('required')) {
+        <span class="text-red-500 text-sm">{{ globalService.WORDS.ERRORS.DESCRIPTION_REQUIRED }}</span>
+        }
+        @if (campaniaForm.get('descripcion')?.hasError('minlength')) {
+        <span class="text-red-500 text-sm">{{ globalService.WORDS.ERRORS.DESCRIPTION_INVALID }}</span>
+        }
+        }
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text text-base-content">{{ globalService.WORDS.LABEL.TARJET_AMOUNT }}</span>
+        </label>
+
+        <input type="number" formControlName="montoObjetivo"
+          class="input input-bordered w-full rounded-xl bg-base-200 text-base-content" />
+      </div>
+
+      <div class="mt-1">
+        @if (campaniaForm.get('montoObjetivo')?.invalid && campaniaForm.get('montoObjetivo')?.touched) {
+        @if (campaniaForm.get('montoObjetivo')?.hasError('required')) {
+        <span class="text-red-500 text-sm">{{ globalService.WORDS.ERRORS.AMOUNT_REQUIRED }}</span>
+        }
+        @if (campaniaForm.get('montoObjetivo')?.hasError('min')) {
+        <span class="text-red-500 text-sm">{{ globalService.WORDS.ERRORS.AMOUNT_INVALID }}</span>
+        }
+        }
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text text-base-content">Imagen de la campaña</span>
+        </label>
+
+        <input type="file" accept="image/*" class="file-input file-input-bordered w-full rounded-xl"
+          (change)="onFileImageSelected($event)" />
+
+        @if (previewImage) {
+        <div class="relative h-64 w-full flex items-center justify-center 
+                   bg-base-200 overflow-hidden rounded-2xl shadow-lg mt-4">
+          <img [src]="previewImage" class="w-full h-full object-cover rounded-2xl" />
+        </div>
+        }
+      </div>
+
+      <button class="btn btn-primary w-full rounded-xl py-3 text-lg" [disabled]="campaniaForm.invalid"
+        (click)="payloadCampaniaId() ? onUpdateCampania() : onCreateCampania()">
+        {{ payloadCampaniaId() ? 'Actualizar campaña' : globalService.WORDS.LABEL.CREATE_CAMPAING }}
+      </button>
+
+
+    </form>
+  </div>
+</div>
