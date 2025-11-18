@@ -1,11 +1,34 @@
-<button (click)="goBack()" class="flex items-center gap-2 text-primary hover:underline mb-5 font-medium transition">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+
+<div class="relative">
+
+   <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary to-primary/80"></div>
+
+    <svg class="absolute top-0 left-0 w-full h-51 text-white/20"
+         viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="currentColor"
+        d="M0,96L80,112C160,128,320,160,480,160C640,160,800,128,960,112C1120,96,1280,96,1360,96L1440,96L1440,0H0Z"></path>
     </svg>
-    {{globalService.WORDS.LABEL.BACK}}
-  </button>
-<div class="p-6 max-w-4xl mx-auto">
-  
+
+    <svg class="absolute bottom-0 right-0 w-full h-51 text-white/20 rotate-180"
+         viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="currentColor"
+        d="M0,96L80,112C160,128,320,160,480,160C640,160,800,128,960,112C1120,96,1280,96,1360,96L1440,96L1440,0H0Z"></path>
+    </svg>
+
+    <svg class="absolute top-24 right-10 w-16 h-16 opacity-15 text-white" 
+         fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 21s-6-4.35-9-8.5S2.75 3 6 3c2.5 0 4 2 4 2s1.5-2 4-2c3.25 0 6 3.5 3 9.5S12 21 12 21z" />
+    </svg>
+
+    <svg class="absolute bottom-20 left-12 w-20 h-20 opacity-15 text-white" 
+         fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 21s-6-4.35-9-8.5S2.75 3 6 3c2.5 0 4 2 4 2s1.5-2 4-2c3.25 0 6 3.5 3 9.5S12 21 12 21z" />
+    </svg>
+  </div>
+
+    <div class="relative z-10 py-15 max-w-4xl mx-auto">
+
   @if (profileResource.isLoading()) {
   <div class="text-center text-gray-500 dark:text-gray-400 py-12 animate-pulse">
     {{globalService.WORDS.LABEL.LOADING_CAMPAIGN}}
@@ -13,42 +36,36 @@
   } @else if (profileResource.value()) {
   @let campania = profileResource.value();
 
+  @if (campania) {
+
   <div class="bg-white dark:bg-base-200 border border-gray-200 dark:border-base-300 
              rounded-3xl shadow-xl overflow-hidden transition-all duration-500">
 
-<div class="relative h-64 sm:h-80 flex items-center justify-center bg-gray-100 dark:bg-gray-800 overflow-hidden">
-  <span
-    class="absolute text-6xl sm:text-7xl font-bold text-gray-600 dark:text-gray-300 
-           transition-opacity duration-300 select-none"
-    [class.opacity-0]="imagenLoaded"
-  >
-    {{ campania?.titulo!.charAt(0).toUpperCase() }}
-  </span>
+    <div class="relative h-64 sm:h-80 flex items-center justify-center bg-gray-100 dark:bg-gray-800 overflow-hidden">
+      <span class="absolute text-6xl sm:text-7xl font-bold text-gray-600 dark:text-gray-300 
+           transition-opacity duration-300 select-none" [class.opacity-0]="imagenLoaded">
+        {{ campania.titulo.charAt(0).toUpperCase() }}
+      </span>
 
-  <img
-    [src]="campania?.imagenUrl"
-    alt="{{ campania?.titulo }}"
-    class="w-full h-full object-cover transition-opacity duration-500"
-    [class.opacity-0]="!imagenLoaded"
-    (load)="imagenLoaded = true"
-    (error)="imagenLoaded = false; campania!.imagenUrl = ''"
-  />
-</div>
+      <img [src]="campania?.imagenUrl" alt="{{ campania?.titulo }}"
+        class="w-full h-full object-cover transition-opacity duration-500" [class.opacity-0]="!imagenLoaded"
+        (load)="imagenLoaded = true" (error)="imagenLoaded = false; campania!.imagenUrl = ''" />
+    </div>
 
     <div class="p-8 sm:p-10 space-y-5">
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100 leading-snug">
-          {{ campania?.titulo }}
+          {{ campania.titulo }}
         </h1>
 
         <span class="px-3 py-1 text-xs font-semibold rounded-full
                    text-white bg-blue-600 dark:bg-blue-500">
-          {{ campania?.status }}
+          {{ campania.status }}
         </span>
       </div>
 
       <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-justify">
-        {{ campania?.descripcion }}
+        {{ campania.descripcion }}
       </p>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-300">
@@ -56,7 +73,8 @@
 
         <div>
           <span class="font-semibold">{{globalService.WORDS.LABEL.START_DATE}}</span>
-          {{ campania?.fechaInicio | date: 'longDate' }}
+
+          {{ parseDate(campania.fechaInicio) | date:'dd/MM/yyyy HH:mm' }}
         </div>
       </div>
 
@@ -65,7 +83,7 @@
           <span class="text-gray-700 dark:text-gray-200">{{globalService.WORDS.LABEL.CAMPAING_PROGRESS}}</span>
           <span class="text-primary font-semibold">
             {{
-            ((campania!.montoRecaudado / campania!.montoObjetivo) * 100)
+            ((campania.montoRecaudado / campania.montoObjetivo) * 100)
             | number: '1.0-0'
             }}%
           </span>
@@ -73,13 +91,13 @@
 
         <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4 overflow-hidden">
           <div class="h-4 bg-lime-500 dark:bg-lime-400 rounded-full transition-all duration-700" [style.width.%]="
-                (campania!.montoRecaudado / campania!.montoObjetivo) * 100
+                (campania.montoRecaudado / campania.montoObjetivo) * 100
               "></div>
         </div>
 
         <div class="flex justify-between mt-3 text-sm font-semibold text-gray-800 dark:text-gray-200">
           <div class="text-center flex-1">
-            {{ 'COP ' + (campania?.montoRecaudado | number: '1.0-0') }}
+            {{ 'COP ' + (campania.montoRecaudado | number: '1.0-0') }}
             <div class="text-xs text-gray-500 dark:text-gray-400 font-medium mt-1">
               Recaudado
             </div>
@@ -88,7 +106,7 @@
           <div class="border-l border-gray-300 dark:border-gray-600 mx-4"></div>
 
           <div class="text-center flex-1">
-            {{ 'COP ' + (campania?.montoObjetivo | number: '1.0-0') }}
+            {{ 'COP ' + (campania.montoObjetivo | number: '1.0-0') }}
             <div class="text-xs text-gray-500 dark:text-gray-400 font-medium mt-1">
               Objetivo
             </div>
@@ -97,6 +115,7 @@
       </div>
     </div>
   </div>
+  }
   } @else {
   <div class="text-center text-red-600 dark:text-red-400 py-12">
     No se encontró la campaña solicitada.
