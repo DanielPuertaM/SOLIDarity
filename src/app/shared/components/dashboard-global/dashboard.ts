@@ -16,7 +16,7 @@ export class Dashboard {
   }
 
   constructor() {
-  console.log('🧭 Dashboard cargado');
+  console.log(' Dashboard cargado');
 }
 }
 
