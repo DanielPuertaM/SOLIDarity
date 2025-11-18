@@ -1,81 +1,190 @@
-<div class="tabs tabs-lift tabs-lg w-full justify-center mb-8">
+<section class="relative py-5">
 
-  <input type="radio" name="tabs_campania" class="tab text-lg" aria-label="En progreso"
-    [checked]="selected() === statusCampania.EN_PROGRESO" (change)="select(statusCampania.EN_PROGRESO)" />
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary to-primary/80"></div>
 
-  <div class="tab-content bg-base-100 border-base-300 p-6 min-h-screen">
-    @if (selected() === statusCampania.EN_PROGRESO) {
-    <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
-    }
+    <svg class="absolute top-0 left-0 w-full h-51 text-white/20"
+         viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="currentColor"
+        d="M0,96L80,112C160,128,320,160,480,160C640,160,800,128,960,112C1120,96,1280,96,1360,96L1440,96L1440,0H0Z"></path>
+    </svg>
+
+    <svg class="absolute bottom-0 right-0 w-full h-51 text-white/20 rotate-180"
+         viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="currentColor"
+        d="M0,96L80,112C160,128,320,160,480,160C640,160,800,128,960,112C1120,96,1280,96,1360,96L1440,96L1440,0H0Z"></path>
+    </svg>
   </div>
 
-  <input type="radio" name="tabs_campania" class="tab text-lg" aria-label="Completadas"
-    [checked]="selected() === statusCampania.COMPLETADA" (change)="select(statusCampania.COMPLETADA)" />
+  <div class="relative z-10">
 
-  <div class="tab-content bg-base-100 border-base-300 p-6 min-h-screen">
-    @if (selected() === statusCampania.COMPLETADA) {
-    <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
-    }
-  </div>
+    <div class="text-center text-white mb-10 px-4">
 
-  @if (authService.hasAdminPermission()) {
-  <input type="radio" name="tabs_campania" class="tab text-lg" aria-label="Pendiente"
-    [checked]="selected() === statusCampania.PENDIENTE" (change)="select(statusCampania.PENDIENTE)" />
-
-  <div class="tab-content bg-base-100 border-base-300 p-6 min-h-screen">
-    @if (selected() === statusCampania.PENDIENTE) {
-    <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
-    }
-  </div>
-
-  <input type="radio" name="tabs_campania" class="tab text-lg" aria-label="Pausada"
-    [checked]="selected() === statusCampania.PAUSADA" (change)="select(statusCampania.PAUSADA)" />
-
-  <div class="tab-content bg-base-100 border-base-300 p-6 min-h-screen">
-    @if (selected() === statusCampania.PAUSADA) {
-    <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
-    }
-  </div>
-
-  <input type="radio" name="tabs_campania" class="tab text-lg" aria-label="Rechazada"
-    [checked]="selected() === statusCampania.RECHAZADA" (change)="select(statusCampania.RECHAZADA)" />
-
-  <div class="tab-content bg-base-100 border-base-300 p-6 min-h-screen">
-    @if (selected() === statusCampania.RECHAZADA) {
-    <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
-    }
-  </div>
-  }
-
-</div>
-
-
-<ng-template #campaniasTemplate>
-  <section class="p-6">
-
-    @if (campaniasResource.isLoading()) {
-    <div class="flex justify-center py-10">
-      <span class="loading loading-spinner loading-lg text-primary"></span>
-    </div>
-    }
-
-    @if (campaniasResource.error()) {
-    <div class="text-center text-red-500 py-6">
-      {{ globalService.WORDS.ERRORS.ERROR_CAMPAIGNS_LOADING }}
-    </div>
-    }
-
-    @if (campaniasResource.hasValue() && campaniasResource.value().length) {
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      @for (campania of campaniasResource.value(); track campania.id) {
-      <app-campania [campania]="campania" />
+      @if(!authService.hasAdminPermission() && !authService.hasVerifierPermission()) {
+        <h1 class="text-3xl font-extrabold drop-shadow">
+          Bienvenido al panel de campañas
+        </h1>
+        <p class="text-white/90 mt-3 text-lg">
+          Aquí puedes explorar campañas solidarias y donar a la causa.
+        </p>
       }
+
+      @if(authService.hasVerifierPermission()) {
+        <h1 class="text-3xl font-extrabold drop-shadow">
+          Panel de verificación de campañas
+        </h1>
+        <p class="text-white/90 mt-3 text-lg">
+          Revisa y valida la información de las campañas.
+        </p>
+      }
+
+      @if(authService.hasAdminPermission()) {
+        <h1 class="text-3xl font-extrabold drop-shadow">
+          Panel administrativo de SOLIDarity
+        </h1>
+        <p class="text-white/90 mt-3 text-lg">
+          Supervisa, controla y gestiona todas las campañas activas, pausadas o rechazadas.
+        </p>
+      }
+
     </div>
-    } @else {
-    <div class="text-center text-gray-500 py-8">
-      {{ globalService.WORDS.ERRORS.NO_CAMPAIGNS_AVAILABLE }}
+    <div class="w-full max-w-[95%] mx-auto mt-6">
+      <div class="tabs tabs-lift tabs-lg w-full justify-center mb-8">
+
+        <input type="radio" name="tabs_campania" class="tab text-lg [--tab-bg:#312E81] [--tab-border-color:#312E81] font-bold"
+          aria-label="En progreso"
+          [checked]="selected() === statusCampania.EN_PROGRESO"
+          (change)="select(statusCampania.EN_PROGRESO)" />
+
+        <div class="tab-content bg-[#312E81] border-base-[#312E81] p-6 min-h-screen rounded-lg shadow-xl">
+          @if (selected() === statusCampania.EN_PROGRESO) {
+            <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
+          }
+        </div>
+
+        @if (!authService.hasVerifierPermission()) {
+          <input type="radio" name="tabs_campania" class="tab [--tab-bg:#312E81] [--tab-border-color:#312E81] bg text-lg font-bold"
+            aria-label="Completadas"
+            [checked]="selected() === statusCampania.COMPLETADA"
+            (change)="select(statusCampania.COMPLETADA)" />
+
+          <div class="tab-content bg-[#312E81] border-base-[#312E81] p-6 min-h-screen rounded-lg shadow-xl">
+            @if (selected() === statusCampania.COMPLETADA) {
+              <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
+            }
+          </div>
+
+          @if (!authService.hasAdminPermission()) {
+            <input type="radio" name="Mis campañas" class="tab [--tab-bg:#312E81] [--tab-border-color:#312E81] bg text-lg font-bold"
+            aria-label="Mis campañas"
+            [checked]="beneficiarioId() === idUser()"
+            (change)="misCampanias(idUser()) " />
+
+          <div class="tab-content bg-[#312E81] border-base-[#312E81] p-6 min-h-screen rounded-lg shadow-xl">
+            @if (beneficiarioId() === idUser()) {
+              <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
+            }
+          </div>
+          }
+        }
+
+        @if (authService.hasAdminPermission()) {
+
+          <input type="radio" name="tabs_campania" class="tab [--tab-bg:#312E81] [--tab-border-color:#312E81] text-lg font-bold"
+            aria-label="Pausada"
+            [checked]="selected() === statusCampania.PAUSADA"
+            (change)="select(statusCampania.PAUSADA)" />
+
+          <div class="tab-content bg-[#312E81] border-base-[#312E81] p-6 min-h-screen rounded-lg shadow-xl">
+            @if (selected() === statusCampania.PAUSADA) {
+              <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
+            }
+          </div>
+
+          <input type="radio" name="tabs_campania" class="tab [--tab-bg:#312E81] [--tab-border-color:#312E81] text-lg font-bold"
+            aria-label="Rechazada"
+            [checked]="selected() === statusCampania.RECHAZADA"
+            (change)="select(statusCampania.RECHAZADA)" />
+
+          <div class="tab-content bg-[#312E81] border-base-[#312E81] p-6 min-h-screen rounded-lg shadow-xl">
+            @if (selected() === statusCampania.RECHAZADA) {
+              <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
+            }
+          </div>
+        }
+
+        @if (authService.hasVerifierPermission()) {
+          <input type="radio" name="tabs_campania" class="tab [--tab-bg:#312E81] [--tab-border-color:#312E81] text-lg font-bold"
+            aria-label="Pendiente"
+            [checked]="selected() === statusCampania.PENDIENTE"
+            (change)="select(statusCampania.PENDIENTE)" />
+
+          <div class="tab-content bg-[#312E81] border-base-[#312E81] p-6 min-h-screen rounded-lg shadow-xl">
+            @if (selected() === statusCampania.PENDIENTE) {
+              <ng-container *ngTemplateOutlet="campaniasTemplate"></ng-container>
+            }
+          </div>
+        }
+
+      </div>
     </div>
+
+    <ng-template #campaniasTemplate>
+      <section class="p-4 bg-[#312E81]">
+
+        @if (campaniasResource.isLoading()) {
+          <div class="flex justify-center py-10">
+            <span class="loading loading-spinner loading-lg text-primary"></span>
+          </div>
+        }
+
+        @if (campaniasResource.error()) {
+          <div class="text-center text-red-500 py-6">
+            {{ globalService.WORDS.ERRORS.ERROR_CAMPAIGNS_LOADING }}
+          </div>
+        }
+
+        @if (campaniasResource.hasValue() && campaniasResource.value().length) {
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @for (campania of campaniasResource.value(); track $index) {
+              <app-campania [campania]="campania" [misCampanias]="estoyEnCampania()" (actionCompleted)="refresh()" />
+            }
+          </div>
+        } @else {
+          <div class="flex flex-col items-center justify-center py-20 text-center text-base-content/70">
+
+        <svg class="w-16 h-16 opacity-40 mb-4" fill="none" stroke="currentColor" stroke-width="1.5"
+             viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 13h6m-3-3v6m9 1V6a2 2 0 00-2-2H5a2 2 0 00-2 2v11m18 0a2 2 0 01-2 2H5a2 2 0 01-2-2" />
+        </svg>
+
+        <p class="text-lg font-medium">
+          {{ globalService.WORDS.ERRORS.NO_CAMPAIGNS_AVAILABLE }}
+        </p>
+
+      </div>
+        }
+
+      </section>
+    </ng-template>
+
+    @if (!authService.hasVerifierPermission() && !authService.hasAdminPermission()) {
+
+      <div class="fixed bottom-6 right-6 flex items-center gap-3 z-[999]">
+        <div class="px-5 py-3 bg-base-100 shadow-xl rounded-xl border border-base-300 
+                     text-sm font-medium text-base-content hidden md:block leading-tight">
+          ¿Tienes un proyecto solidario?<br>¡Crea tu campaña aquí!
+        </div>
+
+        <button routerLink="/steps"
+          class="btn btn-warning btn-circle shadow-2xl w-20 h-20 border-none 
+                 flex items-center justify-center hover:scale-105 transition-all">
+          <img src="assets/crear.png" class="w-17 h-17 opacity-90" />
+        </button>
+
+      </div>
     }
 
-  </section>
-</ng-template>
+  </div>
+</section>
