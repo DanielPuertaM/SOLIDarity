@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { GlobalService } from '@core/services/global_service';
-import { DonacionService } from '../../service/donacion-service';
+import { DonacionService } from '../../../service/donacion-service';
 import { DonacionRequest } from '@core/models/donacion';
 import { Observable } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';

@@ -1,90 +1,149 @@
-<form [formGroup]="donacionForm" (ngSubmit)="onSubmit()"><button (click)="goBack()" class="flex items-center gap-2 text-primary hover:underline mb-5 font-medium transition">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+<section class="relative py-20 min-h-screen flex flex-col items-center justify-start">
+
+  <div class="absolute inset-0 overflow-hidden z-0">
+
+    <div class="absolute inset-0 bg-gradient-to-br from-primary to-primary/80"></div>
+
+    <svg class="absolute top-0 left-0 w-full h-51 text-white/20" viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="currentColor"
+        d="M0,96L80,112C160,128,320,160,480,160C640,160,800,128,960,112C1120,96,1280,96,1360,96L1440,96L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z">
+      </path>
     </svg>
-    {{globalService.WORDS.LABEL.BACK}}
-  </button>
-  <div class="max-w-md mx-auto p-6 rounded-2xl shadow-lg bg-white dark:bg-base-200">
-    
-    <h2 class="text-xl font-semibold text-center mb-4">{{globalService.WORDS.LABEL.CHOOSE_AMOUNT}}</h2>
 
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-      @for (monto of montosFijos; track monto) {
-        <button
-          type="button"
-          class="btn w-full"
-          [class.btn-primary]="donacionForm.value.monto === monto"
-          [class.btn-outline]="donacionForm.value.monto !== monto"
-          (click)="seleccionarMonto(monto)"
-        >
-          {{ 'COP ' + (monto | number: '1.0-0') }}
-        </button>
-      }
-    </div>
+    <svg class="absolute bottom-0 right-0 w-full h-51 text-white/20 rotate-180" viewBox="0 0 1440 320"
+      preserveAspectRatio="none">
+      <path fill="currentColor"
+        d="M0,96L80,112C160,128,320,160,480,160C640,160,800,128,960,112C1120,96,1280,96,1360,96L1440,96L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z">
+      </path>
+    </svg>
 
-    <div class="form-control mb-4">
-      <label class="label text-sm font-medium">{{globalService.WORDS.LABEL.FREE_AMOUNT}}</label>
-      <input
-        type="number"
-        formControlName="monto"
-        class="input input-bordered w-full"
-        placeholder="Otro monto"
-      />
-      @if (donacionForm.controls['monto'].invalid && donacionForm.controls['monto'].touched) {
-        <p class="text-sm text-red-500 mt-1">
-            {{globalService.WORDS.LABEL.AMOUNT_VALID_1000}}
-        </p>
-      }
-    </div>
+    <svg class="absolute top-20 left-10 opacity-20 w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 21s-6-4.35-9-8.5S2.75 3 6 3c2.5 0 4 2 4 2s1.5-2 4-2c3.25 0 6 3.5 3 9.5S12 21 12 21z" />
+    </svg>
 
-    <button
-      type="submit"
-      class="btn btn-primary w-full"
-      [disabled]="donacionForm.invalid || loading()"
-    >
-      {{ loading() ? globalService.WORDS.LABEL.PROCESSING : globalService.WORDS.LABEL.DONATE_NOW }}
-    </button>
+    <svg class="absolute bottom-24 right-12 opacity-20 w-20 h-20 text-white" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 21s-6-4.35-9-8.5S2.75 3 6 3c2.5 0 4 2 4 2s1.5-2 4-2c3.25 0 6 3.5 3 9.5S12 21 12 21z" />
+    </svg>
 
-@if (donacionResource.hasValue() && donacionResource.value()) {
-  <div class="mt-6 rounded-2xl shadow-md bg-green-50 border border-green-200 dark:bg-green-900/20 dark:border-green-800 p-5 text-green-800 dark:text-green-100">
-    <div class="flex items-center gap-2 mb-2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-600 dark:text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M5 13l4 4L19 7" />
-      </svg>
-      <h3 class="text-lg font-semibold"> {{globalService.WORDS.LABEL.THANKS_FOR_DONATION}}</h3>
-    </div>
-
-    <div class="text-sm space-y-1">
-      <p><span class="font-medium text-gray-700 dark:text-gray-300">Monto:</span>
-        {{ donacionResource.value().monto | number: '1.0-0' }} COP
-      </p>
-      <p><span class="font-medium text-gray-700 dark:text-gray-300">Fecha:</span>
-        {{ donacionResource.value().fecha | date:'medium' }}
-      </p>
-      <p><span class="font-medium text-gray-700 dark:text-gray-300">ID de Donación:</span>
-        #{{ donacionResource.value().id }}
-      </p>
-    </div>
   </div>
-}
 
-@if (donacionResource.error()) {
-  <div class="mt-6 rounded-2xl shadow-md bg-red-50 border border-red-200 dark:bg-red-900/20 dark:border-red-800 p-5 text-red-800 dark:text-red-100">
-    <div class="flex items-center gap-2 mb-2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-600 dark:text-red-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M6 18L18 6M6 6l12 12" />
-      </svg>
-      <h3 class="text-lg font-semibold">{{globalService.WORDS.ERRORS.ERROR_PROCESSING_DONATION}}</h3>
-    </div>
+  <div class="relative z-10 text-center mb-10 max-w-2xl px-6">
 
-    <p class="text-sm">
-      Ocurrió un problema al procesar tu donación.  
-      Por favor, inténtalo de nuevo más tarde.
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-white drop-shadow">
+      Tu aporte transforma vidas
+    </h1>
+
+    <p class="text-white/90 mt-3 text-lg leading-relaxed">
+      Escoge un monto, realiza tu donación y ayuda a que más campañas solidarias
+      puedan cambiar el futuro de quienes lo necesitan.
     </p>
   </div>
-}
 
+
+  <form [formGroup]="donacionForm" (ngSubmit)="onSubmit()" class="relative z-10 w-full flex justify-center">
+
+    <div class="max-w-md w-full mx-auto p-8 rounded-3xl shadow-2xl 
+                bg-white/90 backdrop-blur-md dark:bg-base-200/90 
+                border border-white/40 dark:border-base-300/40">
+
+      <h2 class="text-2xl font-bold text-center mb-6 text-primary">
+        {{ globalService.WORDS.LABEL.CHOOSE_AMOUNT }}
+      </h2>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+        @for (monto of montosFijos; track monto) {
+        <button type="button" class="btn w-full rounded-xl shadow-sm transition-all duration-200 text-sm"
+          [class.btn-primary]="donacionForm.value.monto === monto"
+          [class.btn-outline]="donacionForm.value.monto !== monto" (click)="seleccionarMonto(monto)">
+          {{ 'COP ' + (monto | number: '1.0-0') }}
+        </button>
+        }
+      </div>
+
+      <div class="form-control mb-6">
+        <label class="label text-sm font-semibold text-gray-600 dark:text-gray-300">
+          {{ globalService.WORDS.LABEL.FREE_AMOUNT }}
+        </label>
+
+        <input type="number" formControlName="monto" class="input input-bordered w-full rounded-xl shadow-sm"
+          placeholder="Ingresa otro monto" />
+
+        @if (donacionForm.controls['monto'].invalid && donacionForm.controls['monto'].touched) {
+        <p class="text-sm text-red-500 mt-2">
+          {{ globalService.WORDS.LABEL.AMOUNT_VALID_1000 }}
+        </p>
+        }
+      </div>
+      <button type="submit"
+        class="btn btn-primary w-full rounded-xl py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+        [disabled]="donacionForm.invalid || loading()">
+
+        {{ loading() ? globalService.WORDS.LABEL.PROCESSING : globalService.WORDS.LABEL.DONATE_NOW }}
+
+      </button>
+
+      @if (showGracias()) {
+      <div class="mt-8 rounded-2xl shadow-md p-6 border animate-fade-in bg-green-50 border-green-300 
+           dark:bg-green-900/20 dark:border-green-700 text-green-800 dark:text-green-200">
+
+        <div class="flex items-center gap-3">
+          <!-- Ícono de manos celebrando -->
+          <span class="text-4xl animate-bounce">🙌</span>
+
+          <h3 class="text-lg font-semibold">¡Gracias por tu solidaridad!</h3>
+        </div>
+
+        <p class="mt-3">
+           Tu donación ha sido recibida. ¡Estás ayudando a transformar vidas!
+        </p>
+
+        <div class="text-sm space-y-1 mt-3">
+          <p><span class="font-medium">Monto:</span> {{ donacionResource.value().monto | number }}</p>
+          <p><span class="font-medium">Fecha:</span> {{ parseDate(donacionResource.value().fecha) | date:'dd/MM/yyyy
+            HH:mm' }}</p>
+        </div>
+
+        <!-- Emoji niño feliz -->
+        <div class="text-5xl text-center mt-4 animate-fade-up">👦✨</div>
+      </div>
+      }
+
+
+      @if (donacionResource.error()) {
+      <div class="mt-8 rounded-2xl shadow-md bg-red-50 border border-red-300 dark:bg-red-900/20 
+                 dark:border-red-800 p-6 text-red-800 dark:text-red-200">
+
+        <h3 class="text-lg font-semibold mb-3">Hubo un problema </h3>
+        <p class="text-sm">Tu donación no pudo procesarse. Inténtalo más tarde.</p>
+      </div>
+      }
+
+    </div>
+
+  </form>
+
+
+  <div class="relative z-10 text-center text-white/90 mt-16 max-w-3xl px-6">
+    <h3 class="text-xl font-bold mb-4">¿Por qué donar?</h3>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+
+      <div class="p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow">
+        <p class="text-lg font-semibold">🤝 Apoyo real</p>
+        <p class="text-sm mt-1">Cada peso llega directamente a quien lo necesita.</p>
+      </div>
+
+      <div class="p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow">
+        <p class="text-lg font-semibold">🔒 Seguro y transparente</p>
+        <p class="text-sm mt-1">Usamos validación de identidad para evitar fraudes.</p>
+      </div>
+
+      <div class="p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow">
+        <p class="text-lg font-semibold">🌱 Creas esperanza</p>
+        <p class="text-sm mt-1">Tu aporte impulsa nuevas oportunidades.</p>
+      </div>
+
+    </div>
   </div>
-</form>
+
+</section>
