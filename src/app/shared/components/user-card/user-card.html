@@ -1,0 +1,106 @@
+<div class="bg-base-200 dark:bg-base-300 border border-base-300 rounded-3xl shadow-xl overflow-hidden">
+
+    <div class="relative h-48 flex items-center justify-center bg-base-100 overflow-hidden">
+
+        <span class="absolute text-5xl font-bold text-base-content/90 transition-opacity duration-300 select-none"
+            [class.opacity-0]="imagenLoaded">
+            {{ user().name.charAt(0).toUpperCase() }}
+        </span>
+
+        <img [src]="user().imagenUrl" alt="{{ user().name }}"
+            class="w-full h-full object-cover transition-opacity duration-500" [class.opacity-0]="!imagenLoaded"
+            (load)="imagenLoaded = true" (error)="imagenLoaded = false; user().imagenUrl = ''" />
+    </div>
+
+    <div class="p-5 space-y-3">
+
+        <h2 class="text-xl font-bold text-base-content leading-tight">
+            {{ user().name }}
+        </h2>
+
+        <p class="text-sm text-base-content/70">
+            <strong>Email:</strong> {{ user().email }}
+        </p>
+
+        <p class="text-sm text-base-content/70">
+            <strong>Teléfono:</strong> {{ user().telefono }}
+        </p>
+
+        @if (authService.hasVerifierPermission()) {
+
+        <div class="flex items-center justify-between gap-3 pt-4">
+
+            <button (click)="$event.stopPropagation(); pdfAction(statusPdf.APROBADA)" class="flex-1 flex items-center justify-center gap-2 btn btn-sm bg-success text-white shadow-md 
+               hover:bg-success/90 transition-all font-semibold rounded-xl" >
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-90" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Aceptar
+            </button>
+
+            <button (click)="$event.stopPropagation(); pdfAction(statusPdf.RECHAZADA)" class="flex-1 flex items-center justify-center gap-2 btn btn-sm bg-error text-white shadow-md 
+               hover:bg-error/90 transition-all font-semibold rounded-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-90" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                Rechazar
+            </button>
+
+        </div>
+        <div class="pt-3 flex w-full gap-2">
+
+            <button (click)="abrirPdf(user().id)" class="flex-1 flex items-center justify-center gap-2 
+           btn btn-sm bg-info text-white shadow-md hover:bg-info/90 
+           transition-all font-semibold rounded-xl">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-90" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M14 3h7v7m0-7L10 14m-4 4h7v7H6a1 1 0 01-1-1v-6a1 1 0 011-1z" />
+                </svg>
+
+                Abrir PDF
+            </button>
+
+            <button (click)="descargarPdf(user().id)" class="w-12 btn btn-sm bg-base-100 border border-base-300 shadow 
+           hover:bg-base-200 transition-all rounded-xl flex items-center justify-center">
+
+                @if (pdfResource.isLoading()) {
+                <span class="loading loading-spinner loading-xs"></span>
+                } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-90" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
+                </svg>
+                }
+            </button>
+
+        </div>
+        }@else{
+        <div class="flex items-center justify-between gap-3 pt-4">
+            
+                <button (click)="$event.stopPropagation(); userStateAction()" class="flex-1 flex items-center justify-center gap-2 btn btn-sm bg-error text-white shadow-md 
+               hover:bg-error/90 transition-all font-semibold rounded-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-90" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                @if (estado()=== 'ACTIVOS') {
+                Desactivar
+                } @else {
+                Activar
+                }
+            </button>
+            
+
+        </div>
+        }
+
+
+
+    </div>
+
+</div>

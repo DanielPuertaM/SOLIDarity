@@ -1,1 +1,116 @@
-<p>users works!</p>
+<section class="relative py-5">
+
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary to-primary/80"></div>
+
+    <svg class="absolute top-0 left-0 w-full h-51 text-white/20"
+         viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="currentColor"
+        d="M0,96L80,112C160,128,320,160,480,160C640,160,800,128,960,112C1120,96,1280,96,1360,96L1440,96L1440,0H0Z"></path>
+    </svg>
+
+    <svg class="absolute bottom-0 right-0 w-full h-51 text-white/20 rotate-180"
+         viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="currentColor"
+        d="M0,96L80,112C160,128,320,160,480,160C640,160,800,128,960,112C1120,96,1280,96,1360,96L1440,96L1440,0H0Z"></path>
+    </svg>
+  </div>
+
+  <div class="relative z-10">
+
+    <div class="text-center text-white mb-10 px-4">
+
+      @if(authService.hasVerifierPermission()) {
+        <h1 class="text-3xl font-extrabold drop-shadow">Usuarios con PDF pendiente</h1>
+        <p class="text-white/90 mt-3 text-lg">
+          Revisa los usuarios que necesitan verificar su documentación.
+        </p>
+      }
+
+      @if(authService.hasAdminPermission()) {
+        <h1 class="text-3xl font-extrabold drop-shadow">Administración de usuarios</h1>
+        <p class="text-white/90 mt-3 text-lg">
+          Gestiona usuarios activos e inactivos dentro de SOLIDarity.
+        </p>
+      }
+
+    </div>
+
+    <div class="w-full max-w-[95%] mx-auto mt-6">
+      <div class="tabs tabs-lift tabs-lg w-full justify-center mb-8">
+
+        @if(authService.hasVerifierPermission()) {
+
+          <input type="radio" name="tabs_users" 
+                 class="tab [--tab-bg:#312E81] [--tab-border-color:#312E81] text-lg font-bold"
+                 aria-label="PDF Pendientes"
+                 checked />
+
+          <div class="tab-content bg-[#312E81] border-base-[#312E81] p-6 min-h-screen rounded-lg shadow-xl">
+            <ng-container *ngTemplateOutlet="usersTemplate"></ng-container>
+          </div>
+
+        }
+
+        @if(authService.hasAdminPermission()) {
+
+          <input type="radio" name="tabs_users"
+                 class="tab [--tab-bg:#312E81] [--tab-border-color:#312E81] text-lg font-bold"
+                 aria-label="Activos"
+                 [checked]="selectedTab() === 'ACTIVOS'"
+                 (change)="selectTab('ACTIVOS')" />
+
+          <div class="tab-content bg-[#312E81] border-base-[#312E81] p-6 min-h-screen rounded-lg shadow-xl">
+            @if(selectedTab() === 'ACTIVOS') {
+              <ng-container *ngTemplateOutlet="usersTemplate"></ng-container>
+            }
+          </div>
+
+          <input type="radio" name="tabs_users"
+                 class="tab [--tab-bg:#312E81] [--tab-border-color:#312E81] text-lg font-bold"
+                 aria-label="Inactivos"
+                 [checked]="selectedTab() === 'INACTIVOS'"
+                 (change)="selectTab('INACTIVOS')" />
+
+          <div class="tab-content bg-[#312E81] border-base-[#312E81] p-6 min-h-screen rounded-lg shadow-xl">
+            @if(selectedTab() === 'INACTIVOS') {
+              <ng-container *ngTemplateOutlet="usersTemplate"></ng-container>
+            }
+          </div>
+
+        }
+
+      </div>
+    </div>
+
+    <ng-template #usersTemplate>
+      <section class="p-4">
+
+        @if (userResource.isLoading()) {
+          <div class="flex justify-center py-10">
+            <span class="loading loading-spinner loading-lg text-primary"></span>
+          </div>
+        }
+
+        @if (userResource.error()) {
+          <div class="text-center text-red-500 py-6">Error cargando usuarios</div>
+        }
+
+        @if (userResource.hasValue() && userResource.value().length) {
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-32">
+            @for (user of userResource.value(); track user.id) {
+              <app-user-card [user]="user" [estado]="selectedTab()" (actionCompleted)="refresh()"></app-user-card>
+            }
+          </div>
+        } 
+        @else {
+          <p class="text-center text-base-content/70 py-10">
+            No hay usuarios disponibles.
+          </p>
+        }
+
+      </section>
+    </ng-template>
+
+  </div>
+</section>
