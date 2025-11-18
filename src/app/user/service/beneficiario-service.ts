@@ -12,7 +12,7 @@ export class BeneficiarioService {
 
   private globalService = inject(GlobalService);
 
-  constructor(private http: HttpClient) { }
+  private http = inject(HttpClient);
 
   public getStatus(userId: number): Observable<BeneficiarioResponse | { status: string }> {
     return this.http.get<BeneficiarioResponse>(`${this.globalService.API_URLS.USER}/${userId}/beneficiario`).pipe(
