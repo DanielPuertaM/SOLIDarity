@@ -1,120 +1,160 @@
-<nav
-  class="navbar bg-base-100 shadow-md px-6 sticky top-0 z-50 border-b border-base-300 transition-colors duration-300">
-  <div class="navbar-start">
+<div class="drawer">
+  <input id="drawer-solidarity" type="checkbox" class="drawer-toggle" [(ngModel)]="isDrawerOpen" />
 
-    <div class="dropdown lg:hidden">
-      <button tabindex="0" class="btn btn-ghost">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
+  <div class="drawer-content">
+    <nav class="navbar bg-base-100 shadow-md px-6 sticky top-0 z-50 h-17 border-b border-base-300">
 
-      <ul tabindex="0"
-        class="menu menu-sm dropdown-content mt-3 z-[1] p-3 shadow-xl bg-base-100 rounded-xl w-60 space-y-2">
-        @if(authService.hasAdminPermission()){
-        @for (item of navItemsAdmind; track $index) {
-        <li>
-          <a [routerLink]="item.route" routerLinkActive="text-primary font-semibold"
-            class="font-medium text-base hover:text-primary transition-colors">
-            {{ item.label }}
-          </a>
-        </li>
-        }
-        }@else {
+      <div class="navbar-start">
 
-          @for (item of navItems; track $index) {
-          <li>
-            <a [routerLink]="item.route" routerLinkActive="text-primary font-semibold"
-              class="font-medium text-base hover:text-primary transition-colors">
-              {{ item.label }}
-            </a>
-          </li>
-          }
-        }
+        <label for="drawer-solidarity" class="btn btn-ghost drawer-button">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </label>
 
-        <li>
-          <div class="h-px bg-base-300 w-full my-2 select-none rounded"></div>
-        </li>
+        <a routerLink="/user/"
+          class="btn btn-ghost hidden md:block text-2xl font-extrabold tracking-tight text-primary hover:scale-105 transition-transform">
+          SOLIDarity
+        </a>
 
-        <li class="pt-2">
-          <div class="dropdown dropdown-end w-full">
-            <label tabindex="0" class="flex items-center gap-3 cursor-pointer hover:text-primary transition-colors">
-              <div class="btn btn-ghost btn-circle avatar ring ring-primary ring-offset-base-100 ring-offset-2">
-                <div class="w-10 rounded-full flex items-center justify-center bg-base-200">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path fill="#1f00bb"
-                      d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4" />
-                  </svg>
-                </div>
-              </div>
-              <span class="font-semibold">Mi cuenta</span>
-            </label>
+      </div>
 
-            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-xl bg-base-100 rounded-xl w-52">
-              <li><a routerLink="/perfil">Perfil</a></li>
+      <div class="navbar-end items-center gap-4">
+
+        <div class="dropdown dropdown-end">
+
+          @if(!authService.hasAdminPermission()&&!authService.hasVerifierPermission()) {
+          <label tabindex="0" class="btn btn-ghost btn-circle relative">
+
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 
+                6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C8.67 
+                6.165 8 7.388 8 8.75V14l-1 1h5m0 0v1a3 3 0 
+                11-6 0v-1m6 0H9" />
+            </svg>
+
+            @let noti = notificacionesResource.value();
+            @if (notificacionesResource.hasValue() && noti && noti.length) {
+            <span class="badge badge-sm bg-primary text-white absolute -top-1 -right-1">
+              {{ noti.length }}
+            </span>
+            }
+
+          </label>
+
+          <div tabindex="0" class="dropdown-content mt-3 p-0 shadow-xl bg-base-100 rounded-xl
+                   w-80 ring-1 ring-base-300 
+                   max-h-80 overflow-y-auto overflow-x-hidden
+                   z-[9999]">
+
+            <ul class="menu menu-sm p-2 whitespace-normal break-words">
+
+              @if (notificacionesResource.isLoading()) {
+              <li class="p-3 text-center opacity-70">Cargando...</li>
+              }
+
+              @if (notificacionesResource.hasValue() && noti && noti.length) {
+              @for (item of notificacionesResource.value(); track item.id) {
               <li>
-                <a class="text-error font-semibold hover:text-error/80" (click)="authService.signOut()">
-                  Cerrar sesión
-                </a>
+                <div class="p-2 border-b border-base-300">
+                  <p class="font-semibold text-base-content">{{ item.message }}</p>
+                  <p class="text-xs opacity-70">{{ item.fecha }}</p>
+                </div>
               </li>
+              }
+              } @else {
+              <li class="p-3 text-center opacity-70">No tienes notificaciones</li>
+              }
+
             </ul>
           </div>
-        </li>
-      </ul>
-    </div>
-    
-   
-    <a routerLink="/"
-      class="btn btn-ghost text-2xl font-extrabold tracking-tight text-primary hover:scale-105 transition-transform">
-      SOLIDarity
-    </a>
+          }
+
+
+        </div>
+
+        <div class="dropdown dropdown-end">
+          <label tabindex="0"
+            class="btn btn-ghost btn-circle avatar ring ring-primary ring-offset-base-100 ring-offset-2 hover:scale-105 transition-transform">
+            <div class="w-10 rounded-full flex items-center justify-center bg-base-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="#1f00bb"
+                  d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4" />
+              </svg>
+            </div>
+          </label>
+
+          <ul tabindex="0"
+            class="menu menu-sm dropdown-content mt-3 z-[100] p-2 shadow-xl bg-base-100 rounded-xl w-52 ring-1 ring-base-300">
+
+            <li><a routerLink="perfil">Perfil</a></li>
+
+            <li>
+              <a class="text-error font-semibold hover:text-error/80" (click)="authService.signOut()">
+                Cerrar sesión
+              </a>
+            </li>
+
+          </ul>
+        </div>
+
+      </div>
+
+    </nav>
   </div>
 
-  <div class="navbar-center hidden lg:flex">
-    <ul class="menu menu-horizontal px-1 space-x-2">
-      @if (authService.hasAdminPermission()) {
-        @for (item of navItemsAdmind; track $index) {
+  <div class="drawer-side z-[999]">
+    <label for="drawer-solidarity" class="drawer-overlay z-0"></label>
+
+    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-6 flex flex-col">
+
+      <li class="menu-title mb-4">
+
+        <p class="mb-10 mt-4 text-center">
+          <span class="text-3xl font-extrabold text-primary">SOLIDarity</span>
+        </p>
+
+        @if(authService.hasAdminPermission()) {
+        @for(item of navItemsAdmind; track $index) {
       <li>
-        <a [routerLink]="item.route" routerLinkActive="text-primary font-semibold border-b-2 border-primary"
-          class="font-medium hover:text-primary transition-colors duration-200">
+        <a [routerLink]="item.route" routerLinkActive="text-primary font-semibold" (click)="closeDrawer()">
           {{ item.label }}
         </a>
       </li>
       }
-      }@else {
-         @for (item of navItems; track $index) {
+      }
+
+      @else if(authService.hasVerifierPermission()) {
+      @for(item of navItemsVerifier; track $index) {
       <li>
         <a [routerLink]="item.route" routerLinkActive="text-primary font-semibold border-b-2 border-primary"
-          class="font-medium hover:text-primary transition-colors duration-200">
+          (click)="closeDrawer()">
           {{ item.label }}
         </a>
       </li>
       }
       }
-     
+      @else {
+      @for(item of navItems; track $index) {
+      <li>
+        <a [routerLink]="item.route" routerLinkActive="text-primary font-semibold border-b-2 border-primary"
+          (click)="closeDrawer()">
+          {{ item.label }}
+        </a>
+      </li>
+      }
+      }
+
+      <li class="mt-auto">
+        <a class="text-error font-semibold hover:text-error/80" (click)="authService.signOut()">
+          Cerrar sesión
+        </a>
+      </li>
+
+
+
     </ul>
   </div>
 
-  <div class="navbar-end hidden lg:flex items-center gap-4">
-    <div class="dropdown dropdown-end">
-      <label tabindex="0"
-        class="btn btn-ghost btn-circle avatar ring ring-primary ring-offset-base-100 ring-offset-2 hover:scale-105 transition-transform">
-        <div class="w-10 rounded-full flex items-center justify-center bg-base-200">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="#1f00bb"
-              d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4" />
-          </svg>
-        </div>
-      </label>
-      <ul tabindex="0"
-        class="menu menu-sm dropdown-content mt-3 z-[100] p-2 shadow-xl bg-base-100 rounded-xl w-52 ring-1 ring-base-300">
-        <li><a routerLink="/perfil">Perfil</a></li>
-        <li>
-          <a class="text-error font-semibold hover:text-error/80" (click)="authService.signOut()">
-            Cerrar sesión
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+</div>
