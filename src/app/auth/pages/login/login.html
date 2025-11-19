@@ -66,7 +66,7 @@
           [disabled]="loginForm.invalid || loginResource.isLoading()">
           @if (loginResource.isLoading()) {
           <span class="loading loading-spinner loading-sm mr-2"></span>
-          {{ globalService.WORDS.ACTIONS.LOADING }}
+          {{ globalService.WORDS.ACTIONS.LOADING_LOGIN }}
           } @else {
           {{ globalService.WORDS.ACTIONS.LOGIN }}
           }

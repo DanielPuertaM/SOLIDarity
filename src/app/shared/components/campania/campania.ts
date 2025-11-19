@@ -62,7 +62,14 @@ export class Campania {
 
   goToProfile() {
     const id = this.campania().id;
+    if(this.authService.hasVerifierPermission()){
+      this.router.navigate(['/user/dashboard-verificador/home/campania', id]);
+      
+    }else if(this.authService.hasAdminPermission()){
+      this.router.navigate(['/user/dashboard-admin/home/campania', id]);
+    }else{
     this.router.navigate(['/user/dashboard-donante/home/campania', id]);
+    }
   }
 
   goToEdit() {  

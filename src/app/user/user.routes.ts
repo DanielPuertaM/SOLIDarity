@@ -64,6 +64,10 @@ export const userRoutes: Routes = [
 				loadComponent: () => import('../shared/components/campania-list/campania-list')
 			},
 			{
+				path: 'home/campania/:id',
+				loadComponent: () => import('./dashboard-donante/campania-perfil/campania-perfil')
+			},
+			{
 				path: 'users',
 				loadComponent: () => import('./dashboard-admin/users/users')
 			},
@@ -75,6 +79,10 @@ export const userRoutes: Routes = [
 			{
 				path: 'home',
 				loadComponent: () => import('../shared/components/campania-list/campania-list')
+			},
+			{
+				path: 'home/campania/:id',
+				loadComponent: () => import('./dashboard-donante/campania-perfil/campania-perfil')
 			},
 			{
 				path: 'users/pdfs',

@@ -90,6 +90,7 @@ export const WORDS = {
   ACTIONS: {
     REGISTER: "Registrarse",
     LOADING: "Registrando...",
+    LOADING_LOGIN: "Iniciando sesión...",
     LOGIN: "Iniciar sesión"
   },
 

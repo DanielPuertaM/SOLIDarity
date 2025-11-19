@@ -31,7 +31,7 @@
         <div class="flex items-center justify-between gap-3 pt-4">
 
             <button (click)="$event.stopPropagation(); pdfAction(statusPdf.APROBADA)" class="flex-1 flex items-center justify-center gap-2 btn btn-sm bg-success text-white shadow-md 
-               hover:bg-success/90 transition-all font-semibold rounded-xl" >
+               hover:bg-success/90 transition-all font-semibold rounded-xl">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-90" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -81,20 +81,28 @@
         </div>
         }@else{
         <div class="flex items-center justify-between gap-3 pt-4">
-            
-                <button (click)="$event.stopPropagation(); userStateAction()" class="flex-1 flex items-center justify-center gap-2 btn btn-sm bg-error text-white shadow-md 
-               hover:bg-error/90 transition-all font-semibold rounded-xl">
+
+            <button (click)="$event.stopPropagation(); userStateAction()" class="flex-1 flex items-center justify-center gap-2 btn btn-sm text-white shadow-md 
+               hover:bg-error/90 transition-all font-semibold rounded-xl" [class.bg-red-500]="estado() === 'ACTIVOS'"
+                [class.bg-green-500]="estado() === 'INACTIVOS'">
+
+
+                @if (estado()=== 'ACTIVOS') {
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-90" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
-                @if (estado()=== 'ACTIVOS') {
                 Desactivar
                 } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-90" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" role="img" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+
                 Activar
                 }
             </button>
-            
+
 
         </div>
         }
